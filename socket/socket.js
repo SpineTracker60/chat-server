@@ -69,6 +69,39 @@ export default (server, app) => {
   roomNamespace.on("connection", (socket) => {
     console.log("connect room namespace");
     // console.log("user name :", socket.handshake.auth.name);
+
+    let roomId;
+    socket.on("room-join", async (msg) => {
+      roomId = msg.roomId;
+      //const userId = socket.handshake.auth._id;
+      const sockets = await chatNamespace.in(roomId).fetchSockets();
+      //const connectedUser = sockets.map((socket) => socket.handshake.auth._id);
+      // console.log("connectedUser :", connectedUser);
+      //console.log("userId :", userId);
+      await socket.join(roomId);
+      console.log("join roomId :", roomId);
+      roomNamespace.to(roomId).emit("join", {
+        sender: "system",
+        connect: true,
+        //  userId: socket.handshake.auth._id,
+        //name: socket.handshake.auth.name,
+      });
+    });
+
+    socket.on("room-leave", async (msg) => {
+      roomId = msg.roomId;
+      console.log("leave roomId: ", roomId);
+
+      roomNamespace.to(roomId).emit("exit", {
+        sender: "system",
+        connect: false,
+        //userId: socket.handshake.auth._id,
+        //name: socket.handshake.auth.name,
+      });
+
+      await socket.leave(roomId);
+    });
+
     socket.on("disconnect", () => {
       console.log("break connection room namespace");
     });
@@ -81,40 +114,6 @@ export default (server, app) => {
       console.log("socket id", socket.id);
       // socket.join & socket.to(roomId).emit('join', {}) 이벤트를 connection외 다른 곳에서 on이 되도록
       // await socket.join(roomId);
-
-      let roomId;
-      socket.on("room-join", async (msg) => {
-        roomId = msg.roomId;
-        const userId = socket.handshake.auth._id;
-        const sockets = await chatNamespace.in(roomId).fetchSockets();
-        const connectedUser = sockets.map((socket) => socket.handshake.auth._id);
-        console.log("connectedUser :", connectedUser);
-        console.log("userId :", userId);
-        if (!connectedUser.includes(userId)) {
-          await socket.join(roomId);
-          console.log("join roomId :", roomId);
-          chatNamespace.to(roomId).emit("join", {
-            sender: "system",
-            connect: true,
-            userId: socket.handshake.auth._id,
-            name: socket.handshake.auth.name,
-          });
-        }
-      });
-
-      socket.on("room-leave", async (msg) => {
-        roomId = msg.roomId;
-        console.log("leave roomId: ", roomId);
-
-        chatNamespace.to(roomId).emit("exit", {
-          sender: "system",
-          connect: false,
-          userId: socket.handshake.auth._id,
-          name: socket.handshake.auth.name,
-        });
-
-        await socket.leave(roomId);
-      });
 
       socket.on("disconnect", async () => {
         console.log("disconnect roomId: ", roomId);
