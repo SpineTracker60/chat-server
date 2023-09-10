@@ -8,7 +8,7 @@ async function startServer() {
 
     await loaders(app);
 
-    const server = app.listen(process.env.PORT || 3030, "0.0.0.0", (err) => {
+    const server = app.listen(process.env.PORT || 3000, "0.0.0.0", (err) => {
       if (err) {
         return console.log(err);
       }

@@ -10,8 +10,8 @@ export default async () => {
     if (process.env.NODE_ENV !== "production") mongoose.set("debug", true);
 
     try {
-      mongoose.connect(`mongodb+srv://${process.env.MONGO_HOST}`, {
-        dbName: `mauve_${process.env.NODE_ENV}`,
+      mongoose.connect(`mongodb://${process.env.MONGO_HOST}`, {
+        dbName: `SPINE_TRACKER_${process.env.NODE_ENV}`,
         user: process.env.MONGO_USER,
         pass: process.env.MONGO_PASSWORD,
         autoCreate: true,

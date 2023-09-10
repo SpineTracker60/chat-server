@@ -57,26 +57,6 @@ export default (server, app) => {
     readonly: true,
   });
 
-  const pubClient = createClient({
-    host: process.env.REDIS_HOST,
-    port: process.env.REDIS_PORT,
-    db: process.env.REDIS_DB,
-    password: process.env.REDIS_PW,
-    requestsTimeout: 5000,
-    options: {
-      connect_timeout: 600,
-    },
-  });
-  const subClient = pubClient.duplicate();
-  io.adapter(createAdapter(pubClient, subClient));
-
-  pubClient.on("connect", () => {
-    console.log("Redis adapter pubClient connected");
-  });
-  subClient.on("connect", () => {
-    console.log("Redis adapter subClient connected");
-  });
-
   app.set("io", io); // 라우터에서 io 객체를 쓸 수 있게 저장. req.app.get('io')로 접근 가능
 
   const roomNamespace = io.of("/room"); // io.of : 네임스페이스를 만들어 접속

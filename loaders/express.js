@@ -5,12 +5,12 @@ import path from "path";
 import compression from "compression";
 // custom utils And middlewares
 import morgan from "morgan";
-import logger from "../libs/logger/winston";
-import morganFormat from "../libs/logger/index";
+import logger from "../libs/log/winston";
+import morganFormat from "../libs/log/index";
 import jsonResult from "../middlewares/jsonResult";
 
 // application Controllers for Routes
-import { pageNotFoundError, respondInternalError } from "../controllers/errorController";
+import { pageNotFoundError, respondInternalError } from "../controller/error.controller";
 
 export default async (app) => {
   app.set("trust proxy", true);
