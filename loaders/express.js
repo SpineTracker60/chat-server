@@ -10,7 +10,8 @@ import morganFormat from "../libs/log/index";
 import jsonResult from "../middlewares/jsonResult";
 
 // application Controllers for Routes
-import { pageNotFoundError, respondInternalError } from "../controller/error.controller";
+import { pageNotFoundError, respondInternalError } from "../controllers/error.controller";
+import roomRoutes from "../routes/room";
 
 export default async (app) => {
   app.set("trust proxy", true);
@@ -30,6 +31,7 @@ export default async (app) => {
   app.use(jsonResult);
   // application routes
   // custom Error controllers
+  app.use("/room", roomRoutes);
   app.use(pageNotFoundError);
   app.use(respondInternalError);
 
