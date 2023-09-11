@@ -8,7 +8,7 @@ const ChatSchema = new Schema(
     sender_member: { type: Schema.Types.Number, required: true },
     tag: { type: String, required: true, enum: ["chat", "info", "question", "recommend"] },
     body: Schema.Types.Mixed,
-    room: { type: Schema.Types.Number, index: true },
+    room: { type: Schema.Types.String, index: true, required: true },
   },
   {
     collection: "CHAT",
