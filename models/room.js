@@ -3,9 +3,8 @@ import mongoose_delete from "mongoose-delete";
 
 const Schema = mongoose.Schema;
 
-const ChatRoomSchema = new Schema(
+const RoomSchema = new Schema(
   {
-    title: { type: String, unique: true },
     member: { type: Schema.Types.Number, unique: true, required: true },
     note: { type: String, default: "" },
   },
@@ -21,10 +20,10 @@ const ChatRoomSchema = new Schema(
   }
 );
 
-ChatRoomSchema.index({ user: 1, coach: 1 });
+RoomSchema.index({ member: 1 });
 
-ChatRoomSchema.plugin(mongoose_delete, { overrideMethods: true });
+RoomSchema.plugin(mongoose_delete, { overrideMethods: true });
 
-const ChatRoom = mongoose.model("CHAT_ROOM", ChatRoomSchema);
+const Room = mongoose.model("ROOM", RoomSchema);
 
-export default ChatRoom;
+export default Room;

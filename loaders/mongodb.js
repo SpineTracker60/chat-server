@@ -11,7 +11,7 @@ export default async () => {
 
     try {
       mongoose.connect(`mongodb://${process.env.MONGO_HOST}`, {
-        dbName: `SPINE_TRACKER_${process.env.NODE_ENV}`,
+        dbName: `SPINE_TRACKER`,
         user: process.env.MONGO_USER,
         pass: process.env.MONGO_PASSWORD,
         autoCreate: true,
