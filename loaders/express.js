@@ -12,6 +12,7 @@ import jsonResult from "../middlewares/jsonResult";
 // application Controllers for Routes
 import { pageNotFoundError, respondInternalError } from "../controllers/error.controller";
 import roomRoutes from "../routes/room";
+import chatRoutes from "../routes/chat";
 
 export default async (app) => {
   app.set("trust proxy", true);
@@ -32,6 +33,7 @@ export default async (app) => {
   // application routes
   // custom Error controllers
   app.use("/room", roomRoutes);
+  app.use("/chat", chatRoutes);
   app.use(pageNotFoundError);
   app.use(respondInternalError);
 
