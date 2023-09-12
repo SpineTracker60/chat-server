@@ -5,7 +5,8 @@ exports.create = async (req, res, next) => {
   const memberId = req.query.memberId;
   const chat = req.body.chat;
   const chatTag = req.body.chatTag;
-  const results = await chatService.create({ memberId, chat, chatTag });
+  const io = await req.app.get("io");
+  const results = await chatService.create(io, { memberId, chat, chatTag });
 
   let status = httpStatus.CREATED;
   const result = {
