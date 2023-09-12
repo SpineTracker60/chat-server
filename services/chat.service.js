@@ -14,3 +14,20 @@ exports.create = async (io, chatDTO) => {
   io.of("/room").to(roomId).emit("chat", chat);
   return { success: true, newChat };
 };
+
+exports.findByRoomId = async (roomId) => {
+  const chats = await ChatModel.find(
+    {
+      room: roomId,
+    },
+    {
+      sender_member: true,
+      tag: true,
+      body: true,
+      room: true,
+      created_at: true,
+    }
+  );
+
+  return { success: true, chats };
+};
