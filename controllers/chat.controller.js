@@ -32,3 +32,16 @@ exports.create = async (req, res, next) => {
   };
   res.status(status).json(result);
 };
+
+exports.findByRoomId = async (req, res, next) => {
+  const roomId = req.query.roomId;
+  const results = await chatService.findByRoomId(roomId);
+  let status = httpStatus.OK;
+  const result = {
+    status: status,
+    body: {
+      results,
+    },
+  };
+  res.status(status).json(result);
+};

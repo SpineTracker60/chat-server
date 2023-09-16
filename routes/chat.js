@@ -6,4 +6,5 @@ const router = express.Router();
 import * as chatController from "../controllers/chat.controller";
 
 router.post("/", chatController.create);
+router.get("/", chatController.findByRoomId);
 export default router;

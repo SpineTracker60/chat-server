@@ -8,9 +8,7 @@ exports.create = async (req, res, next) => {
   let status = httpStatus.CREATED;
   const result = {
     status: status,
-    body: {
-      results,
-    },
+    body: results,
   };
   res.status(status).json(result);
 };
