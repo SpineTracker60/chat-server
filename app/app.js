@@ -1,5 +1,5 @@
-import loaders from "./loaders";
-import webSocket from "./socket/socket";
+import loaders from "./src/loaders";
+import webSocket from "./src/socket/socket";
 import express from "express";
 
 async function startServer() {
