@@ -10,8 +10,8 @@ exports.create = async (memberId) => {
     });
     const newRoom = await room.save();
     return { success: true, results: newRoom };
-  } catch (err) {
-    return { success: false, body: err };
+  } catch (e) {
+    return { success: false, body: { error: e } };
   }
 };
 
