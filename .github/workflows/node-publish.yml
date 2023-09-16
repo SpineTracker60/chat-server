@@ -1,0 +1,23 @@
+name: Receiver
+
+on:
+  repository_dispatch:
+    types: [node_publish]
+
+jobs:
+  receiver:
+    runs-on: ubuntu-latest
+    steps:
+      - name: create env file
+        run: |
+          touch .env
+          echo MONGO_HOST=${{ secrets.MONGO_HOST }} >> .env
+          echo MONGO_USER=${{ secrets.MONGO_USER }} >> .env
+          echo MONGO_PASSWORD=${{ secrets.MONGO_PASSWORD }} >> .env
+          echo MONGO_PROT=${{ secrets.MONGO_PROT }} >> .env
+          echo MONGO_DATABASE=${{ secrets.MONGO_DATABASE }} >> .env
+
+      - name: A event received
+        run: |
+          docker-compose build
+          docker-compose up

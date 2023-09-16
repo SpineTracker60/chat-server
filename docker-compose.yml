@@ -1,0 +1,47 @@
+version: "3"
+
+networks:
+  server:
+    driver: bridge
+
+services:
+  mongodb:
+    image: mongo:6-jammy
+    container_name: mongodb
+    ports:
+      - 27017:27017
+    restart: always
+    env_file:
+      - .env
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=${MONGO_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${MONGO_PASSWORD}
+    entrypoint: ["mongod", "--auth", "--config", "/etc/mongod.conf"]
+    volumes:
+      - db:/data/db
+      - ./mongodb/mongod.conf:/etc/mongod.conf
+    networks:
+      - server
+
+  app:
+    platform: linux/amd64
+    container_name: spine-tracker-chat-app
+    restart: always
+    build:
+      context: ./app
+    ports:
+      - 3000:3000
+      - 3030:3030
+    environment:
+      TZ: Asia/Seoul
+    env_file:
+      - .env
+    links:
+      - mongodb
+    depends_on:
+      - mongodb
+    networks:
+      - server
+
+volumes:
+  db:

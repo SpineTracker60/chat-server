@@ -1,5 +1,5 @@
 import ChatModel from "../models/chat";
-import roomService from "../services/room.service";
+import roomService from "./room.service";
 import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
