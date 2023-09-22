@@ -46,7 +46,7 @@ export default (server, app) => {
     path: "/socket.io",
     transports: ["websocket"],
     cors: {
-      origin: ["https://admin.socket.io"],
+      origin: ["https://admin.socket.io", "http://192.168.0.31:3000", "http://localhost:3000"],
       credentials: true,
     },
   }); // socket.io 패키지와 express 서버 연결

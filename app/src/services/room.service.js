@@ -9,7 +9,8 @@ exports.create = async (memberId) => {
       member: memberId,
     });
     const newRoom = await room.save();
-    return { success: true, results: newRoom };
+
+    return newRoom;
   } catch (e) {
     return { success: false, body: { error: e } };
   }
