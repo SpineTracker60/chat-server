@@ -20,6 +20,7 @@ exports.create = async (io, chatDTO) => {
 
 exports.requestChatBot = async (io, chatData, memberInfo, memberPosture) => {
   try {
+    console.log("memberPosture : ", memberPosture);
     const chatbotResults = await axios.post(process.env.CHATBOT_HOST, {
       id: chatData.sender_member,
       question: chatData.body,
@@ -28,10 +29,31 @@ exports.requestChatBot = async (io, chatData, memberInfo, memberPosture) => {
       job: memberInfo.job,
       turtle_neck: memberPosture.turtle_neck,
       sleepiness: memberPosture.sleepiness,
+      asymmetry: memberPosture.asymmetry,
       stooped_position: memberPosture.stooped_position,
     });
     io.of("/room").to(chatData.room).emit("chat", chatbotResults.data);
-    return { success: true, newChat: chatbotResults.data };
+    return chatbotResults.data;
+  } catch (err) {
+    console.log(err);
+    return { success: false, err };
+  }
+};
+
+exports.requestUserInfo = async (memberId) => {
+  try {
+    const userInfoResults = await axios.get(`${process.env.APPLICATION_HOST}/member/info?memberId=${memberId}`);
+    return userInfoResults.data;
+  } catch (err) {
+    console.log(err);
+    return { success: false, err };
+  }
+};
+
+exports.requestUnstablePosture = async (memberId) => {
+  try {
+    const unStablePostureResults = await axios.get(`${process.env.APPLICATION_HOST}/posture/ratio?memberId=${memberId}`);
+    return unStablePostureResults.data;
   } catch (err) {
     console.log(err);
     return { success: false, err };
