@@ -9,7 +9,7 @@ exports.create = async (req, res, next) => {
   const results = await create(io, { memberId, chat, chatTag });
   const userInfo = await requestUserInfo(memberId);
   const unStableRatio = await requestUnstablePosture(memberId);
-  const chatbotResults = await requestChatBot(io, results.newChat, userInfo, unStableRatio);
+  const chatbotResults = await requestChatBot(io, results.newChat, userInfo, unStableRatio ? unStableRatio : { turtle_neck: 0.0, sleepiness: 0.0, asymmetry: 0.0, stooped_position: 0.0 });
 
   let status = httpStatus.CREATED;
   const result = {
