@@ -24,13 +24,13 @@ exports.requestChatBot = async (io, chatData, memberInfo, memberPosture) => {
     const chatbotResults = await axios.post(process.env.CHATBOT_HOST, {
       id: chatData.sender_member,
       question: chatData.body,
-      age: memberInfo.age,
+      birth_date: memberInfo.birth_date,
       gender: memberInfo.gender,
       job: memberInfo.job,
-      turtle_neck: memberPosture.turtle_neck,
-      sleepiness: memberPosture.sleepiness,
-      asymmetry: memberPosture.asymmetry,
-      stooped_position: memberPosture.stooped_position,
+      TEXTNECK: memberPosture.turtle_neck,
+      SLEEPINESS: memberPosture.sleepiness,
+      ASYMMETRY: memberPosture.asymmetry,
+      STOOPED: memberPosture.stooped_position,
     });
     io.of("/room").to(chatData.room).emit("chat", chatbotResults.data);
     return chatbotResults.data;
