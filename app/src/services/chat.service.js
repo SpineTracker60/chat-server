@@ -21,6 +21,7 @@ exports.create = async (io, chatDTO) => {
 exports.requestChatBot = async (io, chatData, memberInfo, memberPosture) => {
   try {
     console.log("memberPosture : ", memberPosture);
+    console.log("memberInfo : ", memberInfo);
     const chatbotResults = await axios.post(process.env.CHATBOT_HOST, {
       id: chatData.sender_member,
       question: chatData.body,
